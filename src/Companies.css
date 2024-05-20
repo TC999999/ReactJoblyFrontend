@@ -1,0 +1,19 @@
+.company-search-form form {
+  text-align: center;
+}
+
+.company-search-form input[type="search"] {
+  width: 30%;
+}
+
+.company-search-form input[type="number"] {
+  width: 20%;
+}
+
+.companies-list h1 {
+  text-align: center;
+}
+
+.filtered-companies-list li {
+  list-style-type: none;
+}

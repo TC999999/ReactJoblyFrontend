@@ -1,0 +1,15 @@
+.job-search-form form {
+  text-align: center;
+}
+
+.job-search-form input[type="search"] {
+  width: 30%;
+}
+
+.jobs-list h1 {
+  text-align: center;
+}
+
+.filtered-jobs-list li {
+  list-style-type: none;
+}

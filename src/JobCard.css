@@ -1,0 +1,6 @@
+.job-card {
+  border: solid 2px rgb(29, 135, 135);
+  list-style-type: none;
+  padding: 5px;
+  margin: 5px;
+}

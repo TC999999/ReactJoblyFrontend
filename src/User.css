@@ -1,0 +1,14 @@
+.user-applications li {
+  list-style-type: none;
+}
+
+.user-info {
+  border: solid 2px rgb(29, 135, 135);
+  padding: 5px;
+  margin: 5px;
+}
+
+.user-info li {
+  list-style-type: none;
+  margin: 5px;
+}

@@ -1,0 +1,24 @@
+.navbar {
+  background-color: rgb(56, 52, 52);
+  display: flex;
+  justify-content: space-between;
+}
+
+.navbar a {
+  color: white;
+  margin: 5px;
+}
+
+.navbar span {
+  margin: 5px;
+}
+
+.navbar a:hover {
+  color: purple;
+  background-color: aqua;
+}
+
+.navbar a:active {
+  color: purple;
+  background-color: white;
+}
