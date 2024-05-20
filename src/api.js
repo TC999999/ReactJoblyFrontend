@@ -16,7 +16,6 @@ class JoblyApi {
   static token = localStorage.getItem("jobly-token");
 
   static async request(endpoint, data = {}, method = "get") {
-    console.log(BASE_URL);
     console.debug("API Call:", endpoint, data, method);
 
     //there are multiple ways to pass an authorization token, this is how you pass it in the header.
