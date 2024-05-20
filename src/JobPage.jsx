@@ -12,6 +12,7 @@ const JobPage = () => {
   const [err, setErr] = useState(false);
   const [message, setMessage] = useState("");
 
+  //Upon initial render, set job state by job id in url params
   useEffect(() => {
     async function getJob() {
       try {
@@ -33,10 +34,12 @@ const JobPage = () => {
     return <p>Loading</p>;
   }
 
+  //error message (if job with id in params does not exist)
   if (err) {
     return <h1>{message}</h1>;
   }
 
+  //can only see page if user is logged in
   if (!user) {
     return <h1>Please Log In First!</h1>;
   }

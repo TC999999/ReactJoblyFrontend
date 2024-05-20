@@ -15,6 +15,8 @@ const User = () => {
   const [message, setMessage] = useState("");
   const [currPage, setCurrPage] = useState(username);
 
+  //on initial render, get user from url params and get a list of all jobs
+  //to filter out jobs user has not applied to
   async function getUser() {
     try {
       let user = await JoblyApi.getUser(username);
@@ -39,6 +41,8 @@ const User = () => {
     setIsLoading(false);
   }, [user]);
 
+  //if user in on an unauthorized user page and clicks the link to go to their
+  //own page, this changes the DOM automcatically
   if (username !== currPage) {
     getUser();
     setCurrPage(username);
@@ -50,6 +54,7 @@ const User = () => {
     return <p>Loading</p>;
   }
 
+  //error message (if user tries to get to profiles that aren't their own)
   if (err) {
     return <h1>{message}</h1>;
   }

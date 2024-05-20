@@ -15,6 +15,7 @@ function App() {
     setUser(user);
   };
 
+  //On initial render, get user information from local storage and set as context
   useEffect(() => {
     async function getToken() {
       currentUser(JSON.parse(localStorage.getItem("jobly-user")));
@@ -23,6 +24,7 @@ function App() {
   }, []);
 
   //These functions and user state will be used in context
+  //Set the token and current user in local storage, also set the user as context on login
   const logIn = async (username, token) => {
     localStorage.setItem("jobly-token", token);
     let userInfo = await JoblyApi.getUser(username);
@@ -30,12 +32,14 @@ function App() {
     currentUser(userInfo);
   };
 
+  //remove token and user from local storage and set user context to null on logout
   const logOut = () => {
     localStorage.removeItem("jobly-token");
     localStorage.removeItem("jobly-user");
     currentUser(null);
   };
 
+  //update current user in local storage and context (for applications and profile edits)
   const updateUser = async (user) => {
     localStorage.setItem("jobly-user", JSON.stringify(user));
     currentUser(user);
@@ -44,6 +48,7 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
+        {/**have the whole app use user context */}
         <UserContext.Provider value={{ user, logIn, logOut, updateUser }}>
           <NavBar logOut={logOut} />
           <RoutesList />

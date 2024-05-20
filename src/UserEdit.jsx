@@ -15,6 +15,8 @@ const UserEdit = () => {
   const [subErr, setSubErr] = useState(false);
   const [message, setMessage] = useState("");
 
+  //on initial render, sets edit form input values based on user in
+  //url params
   useEffect(() => {
     const getUser = async () => {
       try {
@@ -32,11 +34,15 @@ const UserEdit = () => {
     setIsLoading(false);
   }, [user]);
 
+  //changes form data state based on change in user input
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((data) => ({ ...data, [name]: value }));
   };
 
+  //on submit, updates user information in db as well as localstorage
+  //and context and redirects back to user page
+  //If there's an error, let the user know
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { firstName, lastName, email } = formData;
@@ -58,10 +64,12 @@ const UserEdit = () => {
     return <p>Loading</p>;
   }
 
+  //Can only see the page if user is logged in
   if (!user) {
     return <h1>Please Log In First!</h1>;
   }
 
+  //if incorrect user, shows a message
   if (userErr) {
     return <h1>{message}</h1>;
   }
@@ -110,6 +118,7 @@ const UserEdit = () => {
           <button>Edit!</button>
         </div>
       </form>
+      {/**if input error, let's user knwo */}
       {subErr && <p>{message}</p>}
     </div>
   );

@@ -36,10 +36,12 @@ const CompanyPage = () => {
     return <p>Loading</p>;
   }
 
+  //error message (if company handle in URL does not exist)
   if (err) {
     return <h1>{message}</h1>;
   }
 
+  //can only see page if user is logged in
   if (!user) {
     return <h1>Please Log In First!</h1>;
   }
@@ -49,6 +51,7 @@ const CompanyPage = () => {
       <CompanyCard company={company} />
       <ul className="company-jobs">
         <h3> Available Jobs</h3>
+        {/** We also see the list of all available jobs a company has */}
         <div className="available-jobs">
           {jobs.map((job) => {
             return (

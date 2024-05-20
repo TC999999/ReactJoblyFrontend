@@ -16,14 +16,17 @@ const Signup = () => {
   const navigate = useNavigate();
   const [err, setErr] = useState(false);
   const [message, setMessage] = useState("");
-
   const [formData, setFormData] = useState(initialState);
 
+  //changes form data state based on change in user input
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((data) => ({ ...data, [name]: value }));
   };
 
+  //on submit, returns user token and sets that and user information
+  //into localstorage and context
+  //If there's an error, let the user know
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { username, password, firstName, lastName, email } = formData;
