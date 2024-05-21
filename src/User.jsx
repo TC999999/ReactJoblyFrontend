@@ -9,7 +9,7 @@ const User = () => {
   const [userInfo, setUserInfo] = useState("");
   const { username } = useParams();
   const { user } = useContext(UserContext);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [applications, setApplications] = useState([]);
   const [err, setErr] = useState(false);
   const [message, setMessage] = useState("");
@@ -35,7 +35,6 @@ const User = () => {
   }
 
   useEffect(() => {
-    setIsLoading(true);
     if (user) {
       getUser();
     }
@@ -64,41 +63,43 @@ const User = () => {
     return <h1>Please Log In First!</h1>;
   }
 
-  return (
-    <div className="user-page">
-      <div className="user-info">
-        <h1>{userInfo.username}</h1>
-        <ul>
-          <li>
-            <b>First Name:</b> {userInfo.firstName}
-          </li>
-          <li>
-            <b>Last Name:</b> {userInfo.lastName}
-          </li>
-          <li>
-            <b>Email Address:</b> {userInfo.email}
-          </li>
-          <li>
-            <b>Status:</b> {userInfo.admin ? "Admin" : "User"}
-          </li>
-        </ul>
-        <Link to={`/users/${userInfo.username}/edit`}>Edit Your Profile</Link>
-      </div>
+  if (userInfo) {
+    return (
+      <div className="user-page">
+        <div className="user-info">
+          <h1>{userInfo.username}</h1>
+          <ul>
+            <li>
+              <b>First Name:</b> {userInfo.firstName}
+            </li>
+            <li>
+              <b>Last Name:</b> {userInfo.lastName}
+            </li>
+            <li>
+              <b>Email Address:</b> {userInfo.email}
+            </li>
+            <li>
+              <b>Status:</b> {userInfo.admin ? "Admin" : "User"}
+            </li>
+          </ul>
+          <Link to={`/users/${userInfo.username}/edit`}>Edit Your Profile</Link>
+        </div>
 
-      <h3>Applications</h3>
-      <div className="user-applications">
-        <ul>
-          {applications.map((app) => {
-            return (
-              <li key={app.id}>
-                <JobCard job={app} />
-              </li>
-            );
-          })}
-        </ul>
+        <h3>Applications</h3>
+        <div className="user-applications">
+          <ul>
+            {applications.map((app) => {
+              return (
+                <li key={app.id}>
+                  <JobCard job={app} />
+                </li>
+              );
+            })}
+          </ul>
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 };
 
 export default User;

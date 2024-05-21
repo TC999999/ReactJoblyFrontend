@@ -9,6 +9,7 @@ const UserEdit = () => {
   const { username } = useParams();
   const [formData, setFormData] = useState(initialState);
   const [isLoading, setIsLoading] = useState(true);
+  const [editLoading, setEditLoading] = useState(false);
   const { user, updateUser } = useContext(UserContext);
   const navigate = useNavigate();
   const [userErr, setUserErr] = useState(false);
@@ -45,6 +46,7 @@ const UserEdit = () => {
   //If there's an error, let the user know
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setEditLoading(true);
     const { firstName, lastName, email } = formData;
     try {
       const updatedUser = await JoblyApi.updateUser(user.username, {
@@ -53,10 +55,12 @@ const UserEdit = () => {
         email,
       });
       updateUser({ ...user, ...updatedUser });
+      setEditLoading(false);
       navigate(`/users/${user.username}`);
     } catch (err) {
       setSubErr(true);
       setMessage(err);
+      setEditLoading(false);
     }
   };
 
@@ -114,10 +118,14 @@ const UserEdit = () => {
             required
           />
         </div>
-        <div className="button-div">
-          <button>Edit!</button>
-        </div>
+        {/**takes away edit button when pressed */}
+        {!editLoading && (
+          <div className="button-div">
+            <button>Edit!</button>
+          </div>
+        )}
       </form>
+      {editLoading && <p>Editing...</p>}
       {/**if input error, let's user knwo */}
       {subErr && <p>{message}</p>}
     </div>

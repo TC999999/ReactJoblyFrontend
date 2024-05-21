@@ -11,7 +11,7 @@ const Jobs = () => {
     minSalary: "",
     hasEquity: "",
   };
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [jobs, setJobs] = useState([]);
   const [search, setSearch] = useState(initialState);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -21,10 +21,10 @@ const Jobs = () => {
 
   //on initial render, set jobs state based on current search params
   useEffect(() => {
-    function getJobs() {
-      checkParams();
+    async function getJobs() {
+      await checkParams();
     }
-    setIsLoading(true);
+
     if (user) {
       getJobs();
     }
@@ -76,7 +76,9 @@ const Jobs = () => {
   const checkParams = async () => {
     let params = {};
     setSearch(initialState);
-    if (searchParams) {
+
+    if (searchParams.size) {
+      console.log("here");
       for (let i of searchParams) {
         params[i[0]] = i[1];
         setSearch((search) => ({ ...search, [i[0]]: i[1] }));
@@ -88,6 +90,7 @@ const Jobs = () => {
       setChecked(false);
     }
     let jobs = await JoblyApi.searchJob(params);
+
     setJobs(jobs);
   };
 
@@ -99,7 +102,7 @@ const Jobs = () => {
     setCurrentSearch(searchParams);
   }
 
-  if (isLoading) {
+  if (isLoading && !jobs.length) {
     return <p>Loading...</p>;
   }
 
@@ -140,9 +143,10 @@ const Jobs = () => {
         </form>
       </div>
       <h1>Jobs</h1>
+
       <div className="filtered-jobs-list">
         {/**If no jobs are in state list and the app is not loading, lets the user know */}
-        {!jobs.length && !isLoading ? (
+        {!jobs.length && !isLoading && searchParams.size ? (
           <p>
             <i>No jobs match your search</i>
           </p>

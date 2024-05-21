@@ -11,7 +11,7 @@ const Companies = () => {
     minEmployees: "",
     maxEmployees: "",
   };
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [companies, setCompanies] = useState([]);
   const [search, setSearch] = useState(initialState);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -33,7 +33,7 @@ const Companies = () => {
         setMessage(err[0]);
       }
     }
-    setIsLoading(true);
+
     if (user) {
       getCompanies();
     }
@@ -67,6 +67,7 @@ const Companies = () => {
     } catch (err) {
       setErr(true);
       setMessage(err[0]);
+      setIsLoading(false);
     }
   };
 
@@ -75,7 +76,7 @@ const Companies = () => {
   const checkParams = async () => {
     let params = {};
     setSearch(initialState);
-    if (searchParams) {
+    if (searchParams.size) {
       for (let i of searchParams) {
         params[i[0]] = i[1];
         setSearch((search) => ({ ...search, [i[0]]: i[1] }));
@@ -93,7 +94,7 @@ const Companies = () => {
     setCurrentSearch(searchParams);
   }
 
-  if (isLoading) {
+  if (isLoading && !companies.length) {
     return <p>Loading</p>;
   }
 
@@ -143,7 +144,7 @@ const Companies = () => {
       <h1>Companies</h1>
       <div className="filtered-companies-list">
         {/**If no companies are in state list and app is not loading, lets the user know */}
-        {!companies.length && !isLoading ? (
+        {!companies.length && !isLoading && searchParams.size ? (
           <p>
             <i>No companies match your search</i>
           </p>
