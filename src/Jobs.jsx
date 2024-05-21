@@ -22,7 +22,7 @@ const Jobs = () => {
   //on initial render, set jobs state based on current search params
   useEffect(() => {
     async function getJobs() {
-      checkParams();
+      await checkParams();
     }
     if (user) {
       getJobs();
@@ -97,7 +97,7 @@ const Jobs = () => {
   }
 
   if (isLoading) {
-    return <p>Loading</p>;
+    return <p>Loading...</p>;
   }
 
   //Can only see the page if user is logged in

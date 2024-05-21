@@ -39,6 +39,7 @@ const Login = ({ isLoading, setIsLoading }) => {
     } catch (err) {
       setErr(true);
       setMessage(err);
+      setIsLoading(false);
     }
   };
 
@@ -76,9 +77,7 @@ const Login = ({ isLoading, setIsLoading }) => {
           </div>
         ) : (
           <div>
-            <p>
-              <i>Loading...</i>
-            </p>
+            <p>Loading...</p>
           </div>
         )}
       </form>

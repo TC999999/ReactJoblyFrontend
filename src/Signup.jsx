@@ -46,6 +46,7 @@ const Signup = ({ isLoading, setIsLoading }) => {
     } catch (err) {
       setErr(true);
       setMessage(err);
+      setIsLoading(false);
     }
   };
 

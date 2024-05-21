@@ -25,7 +25,7 @@ const Companies = () => {
   useEffect(() => {
     async function getCompanies() {
       try {
-        checkParams();
+        await checkParams();
         setErr(false);
         setMessage("");
       } catch (err) {
