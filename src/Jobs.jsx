@@ -11,7 +11,7 @@ const Jobs = () => {
     minSalary: "",
     hasEquity: "",
   };
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [jobs, setJobs] = useState([]);
   const [search, setSearch] = useState(initialState);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -24,6 +24,7 @@ const Jobs = () => {
     function getJobs() {
       checkParams();
     }
+    setIsLoading(true);
     if (user) {
       getJobs();
     }
@@ -57,6 +58,7 @@ const Jobs = () => {
   //are filtered out and sends search parameters to api
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     let params = {};
     for (let i in search) {
       if (search[i]) {
@@ -66,6 +68,7 @@ const Jobs = () => {
     setSearchParams(params);
     let filteredJobs = await JoblyApi.searchJob(params);
     setJobs(filteredJobs);
+    setIsLoading(false);
   };
 
   //this function changes the DOM to only include the jobs based on the current

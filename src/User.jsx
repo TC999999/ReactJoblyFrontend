@@ -9,7 +9,7 @@ const User = () => {
   const [userInfo, setUserInfo] = useState("");
   const { username } = useParams();
   const { user } = useContext(UserContext);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [applications, setApplications] = useState([]);
   const [err, setErr] = useState(false);
   const [message, setMessage] = useState("");
@@ -35,6 +35,7 @@ const User = () => {
   }
 
   useEffect(() => {
+    setIsLoading(true);
     if (user) {
       getUser();
     }

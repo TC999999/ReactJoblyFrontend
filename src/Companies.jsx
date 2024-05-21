@@ -11,7 +11,7 @@ const Companies = () => {
     minEmployees: "",
     maxEmployees: "",
   };
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [companies, setCompanies] = useState([]);
   const [search, setSearch] = useState(initialState);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -33,6 +33,7 @@ const Companies = () => {
         setMessage(err[0]);
       }
     }
+    setIsLoading(true);
     if (user) {
       getCompanies();
     }
@@ -50,6 +51,7 @@ const Companies = () => {
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
+      setIsLoading(true);
       let params = {};
       for (let i in search) {
         if (search[i]) {
@@ -61,6 +63,7 @@ const Companies = () => {
       setErr(false);
       setMessage("");
       setCompanies(filteredCompanies);
+      setIsLoading(false);
     } catch (err) {
       setErr(true);
       setMessage(err[0]);
