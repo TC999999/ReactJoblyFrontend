@@ -1,17 +1,25 @@
 import { Link } from "react-router-dom";
 import JoblyApi from "./api";
-import { useContext } from "react";
+import { useState, useContext } from "react";
 import UserContext from "./UserContext";
 import "./JobCard.css";
 
 const JobCard = ({ job }) => {
   const { user, updateUser } = useContext(UserContext);
+  const [isLoading, setIsLoading] = useState(false);
+  const [success, setSuccess] = useState("");
 
   //Updates user context and local storage if the user applies for a job
   const apply = async (jobId) => {
+    setIsLoading(true);
     await JoblyApi.applyUserForJob(user.username, jobId);
     let applications = [...user.applications, jobId];
     updateUser({ ...user, applications });
+    setIsLoading(false);
+    setSuccess(true);
+    setTimeout(() => {
+      setSuccess(false);
+    }, 2000);
   };
 
   return (
@@ -53,6 +61,8 @@ const JobCard = ({ job }) => {
       {!user.applications.includes(job.id) && (
         <button onClick={() => apply(job.id)}>Apply for Job</button>
       )}
+      {isLoading && <p>Applying...</p>}
+      {success && <p>Successfully Applied!</p>}
     </div>
   );
 };

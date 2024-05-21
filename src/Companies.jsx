@@ -22,7 +22,7 @@ const Companies = () => {
 
   //on initial render, set the companies based on current search parameters
   //in the URL
-  useEffect(() => {
+  useEffect(async () => {
     async function getCompanies() {
       try {
         await checkParams();
@@ -34,7 +34,7 @@ const Companies = () => {
       }
     }
     if (user) {
-      getCompanies();
+      await getCompanies();
     }
     setIsLoading(false);
   }, [user]);

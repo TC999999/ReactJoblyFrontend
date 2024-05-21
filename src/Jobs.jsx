@@ -20,12 +20,12 @@ const Jobs = () => {
   const { user } = useContext(UserContext);
 
   //on initial render, set jobs state based on current search params
-  useEffect(() => {
+  useEffect(async () => {
     async function getJobs() {
       await checkParams();
     }
     if (user) {
-      getJobs();
+      await getJobs();
     }
 
     setIsLoading(false);
