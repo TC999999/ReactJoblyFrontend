@@ -4,7 +4,7 @@ import JoblyApi from "./api";
 import UserContext from "./UserContext";
 import "./Signup.css";
 
-const Signup = () => {
+const Signup = ({ isLoading, setIsLoading }) => {
   const initialState = {
     username: "",
     password: "",
@@ -29,6 +29,7 @@ const Signup = () => {
   //If there's an error, let the user know
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     const { username, password, firstName, lastName, email } = formData;
     try {
       const token = await JoblyApi.signUp({
@@ -112,9 +113,15 @@ const Signup = () => {
             required
           />
         </div>
-        <div className="button-div">
-          <button>Sign up!</button>
-        </div>
+        {!isLoading ? (
+          <div className="button-div">
+            <button>Sign Up!</button>
+          </div>
+        ) : (
+          <div>
+            <p>Loading...</p>
+          </div>
+        )}
       </form>
       {err && <p>{message}</p>}
     </div>

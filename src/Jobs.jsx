@@ -138,8 +138,8 @@ const Jobs = () => {
       </div>
       <h1>Jobs</h1>
       <div className="filtered-jobs-list">
-        {/**If no jobs are in state list, lets the user know */}
-        {!jobs.length ? (
+        {/**If no jobs are in state list and the app is not loading, lets the user know */}
+        {!jobs.length && !isLoading ? (
           <p>
             <i>No jobs match your search</i>
           </p>
