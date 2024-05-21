@@ -7,7 +7,7 @@ import "./JobCard.css";
 const JobCard = ({ job }) => {
   const { user, updateUser } = useContext(UserContext);
   const [isLoading, setIsLoading] = useState(false);
-  const [success, setSuccess] = useState("");
+  const [success, setSuccess] = useState(false);
 
   //Updates user context and local storage if the user applies for a job
   const apply = async (jobId) => {

@@ -36,8 +36,9 @@ const Companies = () => {
 
     if (user) {
       getCompanies();
+    } else {
+      setIsLoading(false);
     }
-    setIsLoading(false);
   }, [user]);
 
   //change the search data when there's a change in the form
@@ -82,8 +83,9 @@ const Companies = () => {
         setSearch((search) => ({ ...search, [i[0]]: i[1] }));
       }
     }
-    let companies = await JoblyApi.searchCompany(params);
-    setCompanies(companies);
+    let res = await JoblyApi.searchCompany(params);
+    setCompanies(res);
+    setIsLoading(false);
   };
 
   //if the user clicks the back button and changes the search params in the URL,
@@ -94,7 +96,7 @@ const Companies = () => {
     setCurrentSearch(searchParams);
   }
 
-  if (isLoading && !companies.length) {
+  if (isLoading) {
     return <p>Loading</p>;
   }
 
@@ -144,7 +146,7 @@ const Companies = () => {
       <h1>Companies</h1>
       <div className="filtered-companies-list">
         {/**If no companies are in state list and app is not loading, lets the user know */}
-        {!companies.length && !isLoading && searchParams.size ? (
+        {!companies && !isLoading ? (
           <p>
             <i>No companies match your search</i>
           </p>

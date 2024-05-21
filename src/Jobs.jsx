@@ -21,15 +21,14 @@ const Jobs = () => {
 
   //on initial render, set jobs state based on current search params
   useEffect(() => {
-    async function getJobs() {
-      await checkParams();
+    function getJobs() {
+      checkParams();
     }
-
     if (user) {
       getJobs();
+    } else {
+      setIsLoading(false);
     }
-
-    setIsLoading(false);
   }, [user]);
 
   //changes search state based on user input (changes hasEquity
@@ -76,9 +75,7 @@ const Jobs = () => {
   const checkParams = async () => {
     let params = {};
     setSearch(initialState);
-
     if (searchParams.size) {
-      console.log("here");
       for (let i of searchParams) {
         params[i[0]] = i[1];
         setSearch((search) => ({ ...search, [i[0]]: i[1] }));
@@ -89,9 +86,10 @@ const Jobs = () => {
     } else {
       setChecked(false);
     }
-    let jobs = await JoblyApi.searchJob(params);
+    let res = await JoblyApi.searchJob(params);
 
-    setJobs(jobs);
+    setJobs(res);
+    setIsLoading(false);
   };
 
   //if the user clicks the back button and changes the search params in the URL,
@@ -102,7 +100,7 @@ const Jobs = () => {
     setCurrentSearch(searchParams);
   }
 
-  if (isLoading && !jobs.length) {
+  if (isLoading) {
     return <p>Loading...</p>;
   }
 
@@ -146,7 +144,7 @@ const Jobs = () => {
 
       <div className="filtered-jobs-list">
         {/**If no jobs are in state list and the app is not loading, lets the user know */}
-        {!jobs.length && !isLoading && searchParams.size ? (
+        {!jobs && !isLoading ? (
           <p>
             <i>No jobs match your search</i>
           </p>
