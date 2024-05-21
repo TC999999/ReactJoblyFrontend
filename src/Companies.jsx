@@ -11,7 +11,7 @@ const Companies = () => {
     minEmployees: "",
     maxEmployees: "",
   };
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [companies, setCompanies] = useState([]);
   const [search, setSearch] = useState(initialState);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -25,9 +25,8 @@ const Companies = () => {
   useEffect(() => {
     function getCompanies() {
       try {
+        setIsLoading(true);
         checkParams();
-        setErr(false);
-        setMessage("");
       } catch (err) {
         setErr(true);
         setMessage(err[0]);

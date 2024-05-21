@@ -9,7 +9,7 @@ const User = () => {
   const [userInfo, setUserInfo] = useState("");
   const { username } = useParams();
   const { user } = useContext(UserContext);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [applications, setApplications] = useState([]);
   const [err, setErr] = useState(false);
   const [message, setMessage] = useState("");
@@ -19,6 +19,7 @@ const User = () => {
   //to filter out jobs user has not applied to
   const getUser = async () => {
     try {
+      setIsLoading(true);
       let userRes = await JoblyApi.getUser(username);
       let jobsRes = await JoblyApi.getAllJobs();
       let applicationsFilter = jobsRes.filter((job) => {

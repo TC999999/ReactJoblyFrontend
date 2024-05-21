@@ -8,7 +8,7 @@ const UserEdit = () => {
   const initialState = { firstName: "", lastName: "", email: "" };
   const { username } = useParams();
   const [formData, setFormData] = useState(initialState);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [editLoading, setEditLoading] = useState(false);
   const { user, updateUser } = useContext(UserContext);
   const navigate = useNavigate();
@@ -21,6 +21,7 @@ const UserEdit = () => {
   useEffect(() => {
     const getUser = async () => {
       try {
+        setIsLoading(true);
         let res = await JoblyApi.getUser(username);
         let { firstName, lastName, email } = res;
         setFormData((f) => ({ ...f, firstName, lastName, email }));
@@ -129,7 +130,7 @@ const UserEdit = () => {
         )}
       </form>
       {editLoading && <p>Editing...</p>}
-      {/**if input error, let's user knwo */}
+      {/**if input error, let's user know */}
       {subErr && <p>{message}</p>}
     </div>
   );

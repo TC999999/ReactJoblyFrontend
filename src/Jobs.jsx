@@ -11,7 +11,7 @@ const Jobs = () => {
     minSalary: "",
     hasEquity: "",
   };
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [jobs, setJobs] = useState([]);
   const [search, setSearch] = useState(initialState);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -22,6 +22,7 @@ const Jobs = () => {
   //on initial render, set jobs state based on current search params
   useEffect(() => {
     function getJobs() {
+      setIsLoading(true);
       checkParams();
     }
     if (user) {
