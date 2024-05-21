@@ -144,7 +144,7 @@ const Jobs = () => {
 
       <div className="filtered-jobs-list">
         {/**If no jobs are in state list and the app is not loading, lets the user know */}
-        {!jobs && !isLoading ? (
+        {!jobs.length && !isLoading ? (
           <p>
             <i>No jobs match your search</i>
           </p>

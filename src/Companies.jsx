@@ -146,7 +146,7 @@ const Companies = () => {
       <h1>Companies</h1>
       <div className="filtered-companies-list">
         {/**If no companies are in state list and app is not loading, lets the user know */}
-        {!companies && !isLoading ? (
+        {!companies.length && !isLoading ? (
           <p>
             <i>No companies match your search</i>
           </p>
