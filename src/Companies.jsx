@@ -97,7 +97,7 @@ const Companies = () => {
   }
 
   if (isLoading) {
-    return <p>Loading</p>;
+    return <p>Loading...</p>;
   }
 
   //Can only see the page if user is logged in

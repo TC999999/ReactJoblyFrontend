@@ -17,28 +17,31 @@ const User = () => {
 
   //on initial render, get user from url params and get a list of all jobs
   //to filter out jobs user has not applied to
-  async function getUser() {
+  const getUser = async () => {
     try {
-      let user = await JoblyApi.getUser(username);
-      let allJobs = await JoblyApi.getAllJobs();
-      let applications = allJobs.filter((job) => {
-        if (user.applications.includes(job.id)) {
+      let userRes = await JoblyApi.getUser(username);
+      let jobsRes = await JoblyApi.getAllJobs();
+      let applicationsFilter = jobsRes.filter((job) => {
+        if (userRes.applications.includes(job.id)) {
           return job;
         }
       });
-      setUserInfo(user);
-      setApplications(applications);
+      setUserInfo(userRes);
+      setApplications(applicationsFilter);
+      setIsLoading(false);
     } catch (err) {
       setErr(true);
       setMessage(err[0]);
+      setIsLoading(false);
     }
-  }
+  };
 
   useEffect(() => {
     if (user) {
       getUser();
+    } else {
+      setIsLoading(false);
     }
-    setIsLoading(false);
   }, [user]);
 
   //if user in on an unauthorized user page and clicks the link to go to their
@@ -51,7 +54,7 @@ const User = () => {
   }
 
   if (isLoading) {
-    return <p>Loading</p>;
+    return <p>Loading...</p>;
   }
 
   //error message (if user tries to get to profiles that aren't their own)
@@ -63,43 +66,41 @@ const User = () => {
     return <h1>Please Log In First!</h1>;
   }
 
-  if (userInfo) {
-    return (
-      <div className="user-page">
-        <div className="user-info">
-          <h1>{userInfo.username}</h1>
-          <ul>
-            <li>
-              <b>First Name:</b> {userInfo.firstName}
-            </li>
-            <li>
-              <b>Last Name:</b> {userInfo.lastName}
-            </li>
-            <li>
-              <b>Email Address:</b> {userInfo.email}
-            </li>
-            <li>
-              <b>Status:</b> {userInfo.admin ? "Admin" : "User"}
-            </li>
-          </ul>
-          <Link to={`/users/${userInfo.username}/edit`}>Edit Your Profile</Link>
-        </div>
-
-        <h3>Applications</h3>
-        <div className="user-applications">
-          <ul>
-            {applications.map((app) => {
-              return (
-                <li key={app.id}>
-                  <JobCard job={app} />
-                </li>
-              );
-            })}
-          </ul>
-        </div>
+  return (
+    <div className="user-page">
+      <div className="user-info">
+        <h1>{userInfo.username}</h1>
+        <ul>
+          <li>
+            <b>First Name:</b> {userInfo.firstName}
+          </li>
+          <li>
+            <b>Last Name:</b> {userInfo.lastName}
+          </li>
+          <li>
+            <b>Email Address:</b> {userInfo.email}
+          </li>
+          <li>
+            <b>Status:</b> {userInfo.admin ? "Admin" : "User"}
+          </li>
+        </ul>
+        <Link to={`/users/${userInfo.username}/edit`}>Edit Your Profile</Link>
       </div>
-    );
-  }
+
+      <h3>Applications</h3>
+      <div className="user-applications">
+        <ul>
+          {applications.map((app) => {
+            return (
+              <li key={app.id}>
+                <JobCard job={app} />
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    </div>
+  );
 };
 
 export default User;

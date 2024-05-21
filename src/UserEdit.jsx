@@ -21,18 +21,21 @@ const UserEdit = () => {
   useEffect(() => {
     const getUser = async () => {
       try {
-        let user = await JoblyApi.getUser(username);
-        let { firstName, lastName, email } = user;
+        let res = await JoblyApi.getUser(username);
+        let { firstName, lastName, email } = res;
         setFormData((f) => ({ ...f, firstName, lastName, email }));
+        setIsLoading(false);
       } catch (err) {
         setUserErr(true);
         setMessage(err[0]);
+        setIsLoading(false);
       }
     };
     if (user) {
       getUser();
+    } else {
+      setIsLoading(false);
     }
-    setIsLoading(false);
   }, [user]);
 
   //changes form data state based on change in user input
