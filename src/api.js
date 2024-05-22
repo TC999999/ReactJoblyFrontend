@@ -113,8 +113,6 @@ class JoblyApi {
     let res = await this.request(`users/${username}/jobs/${jobId}`, {}, "post");
     return res;
   }
-
-  // obviously, you'll add a lot here ...
 }
 
 export default JoblyApi;

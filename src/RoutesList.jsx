@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Home from "./Home.jsx";
 import Companies from "./Companies.jsx";
 import CompanyPage from "./CompanyPage.jsx";
@@ -19,6 +19,7 @@ const RoutesList = () => {
       <Route path="/register" exact element={<Register />} />
       <Route path="/users/:username" exact element={<User />} />
       <Route path="/users/:username/edit" exact element={<UserEdit />} />
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
 };

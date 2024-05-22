@@ -8,7 +8,7 @@ import "./User.css";
 const User = () => {
   const [userInfo, setUserInfo] = useState("");
   const { username } = useParams();
-  const { user } = useContext(UserContext);
+  const { user, getApplications } = useContext(UserContext);
   const [isLoading, setIsLoading] = useState(false);
   const [applications, setApplications] = useState([]);
   const [err, setErr] = useState(false);
@@ -82,7 +82,7 @@ const User = () => {
             <b>Email Address:</b> {userInfo.email}
           </li>
           <li>
-            <b>Status:</b> {userInfo.admin ? "Admin" : "User"}
+            <b>Status:</b> {userInfo.isAdmin ? "Admin" : "User"}
           </li>
         </ul>
         <Link to={`/users/${userInfo.username}/edit`}>Edit Your Profile</Link>

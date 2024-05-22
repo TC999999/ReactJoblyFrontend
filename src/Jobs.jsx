@@ -23,6 +23,8 @@ const Jobs = () => {
   useEffect(() => {
     function getJobs() {
       setIsLoading(true);
+      console.log("loading for some reason");
+      console.log(user);
       checkParams();
     }
     if (user) {
@@ -88,7 +90,6 @@ const Jobs = () => {
       setChecked(false);
     }
     let res = await JoblyApi.searchJob(params);
-
     setJobs(res);
     setIsLoading(false);
   };

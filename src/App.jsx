@@ -3,7 +3,6 @@ import NavBar from "./Navbar.jsx";
 import { useState, useEffect } from "react";
 import UserContext from "./UserContext.js";
 import "./App.css";
-
 import { BrowserRouter } from "react-router-dom";
 import JoblyApi from "./api.js";
 
@@ -40,16 +39,23 @@ function App() {
   };
 
   //update current user in local storage and context (for applications and profile edits)
-  const updateUser = async (user) => {
+  const updateUser = (user) => {
     localStorage.setItem("jobly-user", JSON.stringify(user));
-    currentUser(user);
+  };
+
+  const getApplications = () => {
+    let user = JSON.parse(localStorage.getItem("jobly-user"));
+    let apps = user.applications;
+    return apps;
   };
 
   return (
     <div className="App">
       <BrowserRouter>
         {/**have the whole app use user context */}
-        <UserContext.Provider value={{ user, logIn, logOut, updateUser }}>
+        <UserContext.Provider
+          value={{ user, logIn, logOut, updateUser, getApplications }}
+        >
           <NavBar logOut={logOut} />
           <RoutesList />
         </UserContext.Provider>
