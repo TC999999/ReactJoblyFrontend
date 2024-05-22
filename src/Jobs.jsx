@@ -23,8 +23,6 @@ const Jobs = () => {
   useEffect(() => {
     function getJobs() {
       setIsLoading(true);
-      console.log("loading for some reason");
-      console.log(user);
       checkParams();
     }
     if (user) {
