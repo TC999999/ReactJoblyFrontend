@@ -7,7 +7,7 @@ import UserContext from "./UserContext.js";
 const JobPage = () => {
   const { id } = useParams();
   const { user } = useContext(UserContext);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [job, setJob] = useState([]);
   const [err, setErr] = useState(false);
   const [message, setMessage] = useState("");
@@ -16,18 +16,21 @@ const JobPage = () => {
   useEffect(() => {
     async function getJob() {
       try {
+        setIsLoading(true);
         let job = await JoblyApi.getJobById(id);
         setJob(job);
+        setIsLoading(false);
       } catch (err) {
         setErr(true);
         setMessage(err[0]);
+        setIsLoading(false);
       }
     }
     if (user) {
       getJob();
+    } else {
+      setIsLoading(false);
     }
-
-    setIsLoading(false);
   }, [user]);
 
   if (isLoading) {

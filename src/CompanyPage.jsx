@@ -9,7 +9,7 @@ import "./CompanyPage.css";
 const CompanyPage = () => {
   const { handle } = useParams();
   const { user } = useContext(UserContext);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [company, setCompany] = useState({});
   const [jobs, setJobs] = useState([]);
   const [err, setErr] = useState(false);
@@ -18,18 +18,22 @@ const CompanyPage = () => {
   useEffect(() => {
     async function getCompany() {
       try {
+        setIsLoading(true);
         let company = await JoblyApi.getCompanyByHandle(handle);
         setCompany(company);
         setJobs(company.jobs);
+        setIsLoading(false);
       } catch (err) {
         setErr(true);
         setMessage(err[0]);
+        setIsLoading(false);
       }
     }
     if (user) {
       getCompany();
+    } else {
+      setIsLoading(false);
     }
-    setIsLoading(false);
   }, [user]);
 
   if (isLoading) {
