@@ -61,11 +61,11 @@ const JobCard = ({ job }) => {
       {/**if job is in current user's application list, does not show
        apply button
        */}
-      {!userApps.includes(job.id) && (
+      {!userApps.includes(job.id) && !isApplying && (
         <button onClick={apply}>Apply for Job</button>
       )}
       {isApplying && <p>Applying...</p>}
-      {success && <p>Successfully Applied!</p>}
+      {success && <p className="success-message">Successfully Applied!</p>}
     </div>
   );
 };
