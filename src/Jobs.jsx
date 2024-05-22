@@ -97,12 +97,14 @@ const Jobs = () => {
   //Then the app automatically changes the DOM to only show the jobs
   //based on the search parameters
   if (currentSearch !== searchParams) {
+    setIsLoading(true);
     checkParams();
     setCurrentSearch(searchParams);
+    setIsLoading(false);
   }
 
   if (isLoading) {
-    return <p>Loading...</p>;
+    return <p className="loading-message">Loading...</p>;
   }
 
   //Can only see the page if user is logged in

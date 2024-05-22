@@ -37,7 +37,7 @@ const CompanyPage = () => {
   }, [user]);
 
   if (isLoading) {
-    return <p>Loading</p>;
+    return <p className="loading-message">Loading...</p>;
   }
 
   //error message (if company handle in URL does not exist)

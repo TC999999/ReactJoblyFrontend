@@ -69,7 +69,7 @@ const UserEdit = () => {
   };
 
   if (isLoading) {
-    return <p>Loading</p>;
+    return <p className="loading-message">Loading...</p>;
   }
 
   //Can only see the page if user is logged in

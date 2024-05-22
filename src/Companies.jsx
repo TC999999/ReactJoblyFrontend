@@ -58,8 +58,9 @@ const Companies = () => {
           params[i] = search[i];
         }
       }
-      setSearchParams(params);
+
       let filteredCompanies = await JoblyApi.searchCompany(params);
+      setSearchParams(params);
       setErr(false);
       setMessage("");
       setCompanies(filteredCompanies);
@@ -68,6 +69,7 @@ const Companies = () => {
       setErr(true);
       setMessage(err[0]);
       setIsLoading(false);
+      setSearch({ ...initialState, name: search.name });
     }
   };
 
@@ -91,12 +93,14 @@ const Companies = () => {
   //Then the app automatically changes the DOM to only show the companies
   //based on the search parameters
   if (currentSearch !== searchParams) {
+    setIsLoading(true);
     checkParams();
     setCurrentSearch(searchParams);
+    setIsLoading(false);
   }
 
   if (isLoading) {
-    return <p>Loading...</p>;
+    return <p className="loading-message">Loading...</p>;
   }
 
   //Can only see the page if user is logged in

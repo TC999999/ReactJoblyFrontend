@@ -1,3 +1,7 @@
 body {
   background-color: aliceblue;
 }
+
+.loading-message {
+  font-weight: bold;
+}

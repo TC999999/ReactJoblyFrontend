@@ -34,7 +34,7 @@ const JobPage = () => {
   }, [user]);
 
   if (isLoading) {
-    return <p>Loading</p>;
+    return <p className="loading-message">Loading...</p>;
   }
 
   //error message (if job with id in params does not exist)

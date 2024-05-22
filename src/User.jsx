@@ -55,7 +55,7 @@ const User = () => {
   }
 
   if (isLoading) {
-    return <p>Loading...</p>;
+    return <p className="loading-message">Loading...</p>;
   }
 
   //error message (if user tries to get to profiles that aren't their own)
