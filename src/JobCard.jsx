@@ -6,16 +6,16 @@ import "./JobCard.css";
 
 const JobCard = ({ job }) => {
   const { user, updateUser } = useContext(UserContext);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isApplying, setIsApplying] = useState(false);
   const [success, setSuccess] = useState(false);
 
   //Updates user context and local storage if the user applies for a job
   const apply = async (jobId) => {
-    setIsLoading(true);
+    setIsApplying(true);
     await JoblyApi.applyUserForJob(user.username, jobId);
     let applications = [...user.applications, jobId];
     updateUser({ ...user, applications });
-    setIsLoading(false);
+    setIsApplying(false);
     setSuccess(true);
     setTimeout(() => {
       setSuccess(false);
@@ -58,10 +58,10 @@ const JobCard = ({ job }) => {
       {/**if job is in current user's application list, does not show
        apply button
        */}
-      {!user.applications.includes(job.id) && (
+      {!user.applications.includes(job.id) && !isApplying && (
         <button onClick={() => apply(job.id)}>Apply for Job</button>
       )}
-      {isLoading && <p>Applying...</p>}
+      {isApplying && <p>Applying...</p>}
       {success && <p>Successfully Applied!</p>}
     </div>
   );
